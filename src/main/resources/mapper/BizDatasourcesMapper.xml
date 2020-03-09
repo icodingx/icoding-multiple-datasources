@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icoding.datasource.mapper.BizDatasourcesMapper">
+
+    <resultMap type="BizDatasources" id="BizDatasourcesResult">
+        <result property="id"    column="id"    />
+        <result property="dbType"    column="db_type"    />
+        <result property="dsName"    column="ds_name"    />
+        <result property="dbPort"    column="db_port"    />
+        <result property="dbIp"    column="db_ip"    />
+        <result property="dbName"    column="db_name"    />
+        <result property="dbParams"    column="db_params"    />
+        <result property="dbUsername"    column="db_username"    />
+        <result property="dbPassword"    column="db_password"    />
+        <result property="status"    column="status"    />
+        <result property="initialSize"    column="initial_size"    />
+        <result property="maxActive"    column="max_active"    />
+        <result property="minIdle"    column="min_idle"    />
+        <result property="maxWait"    column="max_wait"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBizDatasourcesVo">
+        select id, ds_name, db_type, db_port, db_ip, db_name, db_params, db_username, db_password, status, initial_size, max_active, min_idle, max_wait, create_by, create_time, update_by, update_time, remark from biz_datasources
+    </sql>
+
+    <select id="selectBizDatasourcesList" resultMap="BizDatasourcesResult">
+        <include refid="selectBizDatasourcesVo"/>
+        <if test="array != null">
+        where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        </if>
+    </select>
+
+    <select id="selectBizDatasourcesById" parameterType="Long" resultMap="BizDatasourcesResult">
+        <include refid="selectBizDatasourcesVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBizDatasourcesByName" parameterType="String" resultMap="BizDatasourcesResult">
+        <include refid="selectBizDatasourcesVo"/>
+        where ds_name = #{dsName}
+    </select>
+
+    <insert id="insertBizDatasources" parameterType="BizDatasources" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_datasources
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dbType != null  and dbType != ''">db_type,</if>
+            <if test="dsName != null  and dsName != ''">ds_name,</if>
+            <if test="dbPort != null ">db_port,</if>
+            <if test="dbIp != null  and dbIp != ''">db_ip,</if>
+            <if test="dbName != null  and dbName != ''">db_name,</if>
+            <if test="dbParams != null  and dbParams != ''">db_params,</if>
+            <if test="dbUsername != null  and dbUsername != ''">db_username,</if>
+            <if test="dbPassword != null  and dbPassword != ''">db_password,</if>
+            <if test="status != null ">status,</if>
+            <if test="initialSize != null ">initial_size,</if>
+            <if test="maxActive != null ">max_active,</if>
+            <if test="minIdle != null ">min_idle,</if>
+            <if test="maxWait != null ">max_wait,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dbType != null  and dbType != ''">#{dbType},</if>
+            <if test="dsName != null  and dsName != ''">#{dsName},</if>
+            <if test="dbPort != null ">#{dbPort},</if>
+            <if test="dbIp != null  and dbIp != ''">#{dbIp},</if>
+            <if test="dbName != null  and dbName != ''">#{dbName},</if>
+            <if test="dbParams != null  and dbParams != ''">#{dbParams},</if>
+            <if test="dbUsername != null  and dbUsername != ''">#{dbUsername},</if>
+            <if test="dbPassword != null  and dbPassword != ''">#{dbPassword},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="initialSize != null ">#{initialSize},</if>
+            <if test="maxActive != null ">#{maxActive},</if>
+            <if test="minIdle != null ">#{minIdle},</if>
+            <if test="maxWait != null ">#{maxWait},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizDatasources" parameterType="BizDatasources">
+        update biz_datasources
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dbType != null  and dbType != ''">db_type = #{dbType},</if>
+            <if test="dsName != null  and dsName != ''">ds_name = #{dsName},</if>
+            <if test="dbPort != null ">db_port = #{dbPort},</if>
+            <if test="dbIp != null  and dbIp != ''">db_ip = #{dbIp},</if>
+            <if test="dbName != null  and dbName != ''">db_name = #{dbName},</if>
+            <if test="dbParams != null  and dbParams != ''">db_params = #{dbParams},</if>
+            <if test="dbUsername != null  and dbUsername != ''">db_username = #{dbUsername},</if>
+            <if test="dbPassword != null  and dbPassword != ''">db_password = #{dbPassword},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="initialSize != null ">initial_size = #{initialSize},</if>
+            <if test="maxActive != null ">max_active = #{maxActive},</if>
+            <if test="minIdle != null ">min_idle = #{minIdle},</if>
+            <if test="maxWait != null ">max_wait = #{maxWait},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizDatasourcesById" parameterType="Long">
+        delete from biz_datasources where id = #{id}
+    </delete>
+
+    <delete id="deleteBizDatasourcesByIds" parameterType="String">
+        delete from biz_datasources where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
